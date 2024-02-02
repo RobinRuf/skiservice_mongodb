@@ -1,0 +1,947 @@
+{
+	"info": {
+		"_postman_id": "982a4d70-f440-42d2-a053-424c04a8a4fd",
+		"name": "SkiService_NoSQL",
+		"description": "# **IMPORTANT**\n\n- You need to import the Environment also, otherwise the tests won't work.\n- Please make sure, that the skiservice backend is running before starting the tests\n    \n- Some tests will not run by its own, before you run all tests in a row the first time. So please start the Runner and run through all tests one. (This is because the environment-variables need to be filled out.)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29157825"
+	},
+	"item": [
+		{
+			"name": "GetAllServiceOrders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();\r",
+							"pm.environment.set(\"serviceOrderId\", responseData[0].id);\r",
+							"pm.environment.set(\"priorityId\", responseData[0].priorityId);\r",
+							"pm.environment.set(\"serviceId\", responseData[0].serviceId);\r",
+							"pm.environment.set(\"statusId\", responseData[0].statusId);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each element has the expected properties and types\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    jsonData.forEach((element) => {\r",
+							"        pm.expect(element).to.have.property('id').that.is.a('string');\r",
+							"        pm.expect(element).to.have.property('firstname').that.is.a('string');\r",
+							"        pm.expect(element).to.have.property('lastname').that.is.a('string');\r",
+							"        pm.expect(element).to.have.property('email').that.include('@');\r",
+							"        pm.expect(element).to.have.property('phone').that.is.a('string');\r",
+							"        pm.expect(element).to.have.property('priorityId').that.is.a('string');\r",
+							"        pm.expect(element).to.have.property('priority').that.is.an('object');\r",
+							"        pm.expect(element.priority).to.have.property('id').that.is.a('string');\r",
+							"        pm.expect(element.priority).to.have.property('priorityName').that.is.a('string');\r",
+							"        pm.expect(element.priority).to.have.property('price').that.is.a('number');\r",
+							"        pm.expect(element).to.have.property('createDate').that.is.a('string');\r",
+							"        pm.expect(element).to.have.property('pickupDate').that.is.a('string');\r",
+							"        pm.expect(element).to.have.property('serviceId').that.is.a('string');\r",
+							"        pm.expect(element).to.have.property('service').that.is.an('object');\r",
+							"        pm.expect(element.service).to.have.property('id').that.is.a('string');\r",
+							"        pm.expect(element.service).to.have.property('serviceName').that.is.a('string');\r",
+							"        pm.expect(element.service).to.have.property('price').that.is.a('number');\r",
+							"        pm.expect(element).to.have.property('totalPrice_CHF').that.is.a('number');\r",
+							"        pm.expect(element).to.have.property('statusId').that.is.a('string');\r",
+							"        pm.expect(element).to.have.property('status').that.is.an('object');\r",
+							"        pm.expect(element.status).to.have.property('id').that.is.a('string');\r",
+							"        pm.expect(element.status).to.have.property('statusName').that.is.a('string');\r",
+							"        pm.expect(element).to.have.property('comment').that.is.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check values for priorityName and statusName\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    jsonData.forEach((element) => {\r",
+							"        pm.expect(element.priority.priorityName).to.be.oneOf(['Tief', 'Standard', 'Hoch']);\r",
+							"        pm.expect(element.status.statusName).to.be.oneOf(['Offen', 'In Arbeit', 'Abgeschlossen', 'Storniert']);\r",
+							"    });\r",
+							"});\r",
+							"pm.test(\"Email is in a valid format\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  responseData.forEach(function(order) {\r",
+							"    pm.expect(order.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+							"  });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Date is in a valid date format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    responseData.forEach(function(order) {\r",
+							"        // Regex pattern for matching ISO 8601 date format\r",
+							"        let dateRegex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/;\r",
+							"        pm.expect(order.createDate).to.match(dateRegex);\r",
+							"        pm.expect(order.pickupDate).to.match(dateRegex);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Phone is in a valid format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    responseData.forEach(function(order) {\r",
+							"        pm.expect(order.phone).to.match(/^\\d{10}$/);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify priorityName and statusName are present and have valid values\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('array');\r",
+							"    responseData.forEach(function (item) {\r",
+							"        pm.expect(item.priority).to.have.property('priorityName').that.is.a('string');\r",
+							"        pm.expect(item.status).to.have.property('statusName').that.is.a('string');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7297/api/serviceorders",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"api",
+						"serviceorders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewServiceOrder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();\r",
+							"pm.environment.set(\"serviceOrderId\", responseData.id);\r",
+							"pm.environment.set(\"priorityId\", responseData.priorityId);\r",
+							"pm.environment.set(\"serviceId\", responseData.serviceId);\r",
+							"pm.environment.set(\"statusId\", responseData.statusId);\r",
+							"\r",
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Email is in a valid format\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.email).to.be.a('string').and.to.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Priority and service fields should be null\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.priority).to.be.null;\r",
+							"  pm.expect(responseData.service).to.be.null;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Total price is a non-negative number\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"  pm.expect(responseData.totalPrice_CHF).to.be.a('number');\r",
+							"  pm.expect(responseData.totalPrice_CHF).to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Id is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Id should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Create date is in a valid date format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.createDate).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Pickup date is either null or in a valid date format\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.pickupDate).to.satisfy(function (date) {\r",
+							"    return date === null || !isNaN(Date.parse(date));\r",
+							"  }, \"Pickup date should be null or a valid date format\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Robin\",\r\n    \"lastname\": \"Ruf\",\r\n    \"email\": \"robin.ruf@student.ipso.ch\",\r\n    \"phone\": \"0760000069\",\r\n    \"priorityId\": \"{{priorityId}}\",\r\n    \"createDate\": \"2024-02-02T10:28:32.114Z\",\r\n    \"pickupDate\": \"2024-02-03T10:28:32.116Z\",\r\n    \"serviceId\": \"{{serviceId}}\",\r\n    \"statusId\": \"{{statusId}}\",\r\n    \"comment\": \"Willkommen zu meiner SkiServiceApi mit MongoDB\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7297/api/serviceorders",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"api",
+						"serviceorders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetServiceOrderById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the expected structure\", function () {\r",
+							"    let response = pm.response.json();\r",
+							"\r",
+							"    pm.expect(response).to.be.an('object');\r",
+							"    pm.expect(response).to.have.property('id').that.equals(pm.variables.get(\"serviceOrderId\"));\r",
+							"    pm.expect(response).to.have.property('firstname').that.is.a('string');\r",
+							"    pm.expect(response).to.have.property('lastname').that.is.a('string');\r",
+							"    pm.expect(response).to.have.property('email').that.is.a('string');\r",
+							"    pm.expect(response).to.have.property('phone').that.is.a('string');\r",
+							"    pm.expect(response).to.have.property('priorityId').that.is.a('string');\r",
+							"    pm.expect(response).to.have.property('createDate').that.is.a('string');\r",
+							"    pm.expect(response).to.have.property('pickupDate').that.is.a('string');\r",
+							"    pm.expect(response).to.have.property('serviceId').that.is.a('string');\r",
+							"    pm.expect(response).to.have.property('totalPrice_CHF').that.is.a('number');\r",
+							"    pm.expect(response).to.have.property('statusId').that.is.a('string');\r",
+							"    pm.expect(response).to.have.property('comment').that.is.a('string');\r",
+							"\r",
+							"    pm.expect(response.priority).to.be.an('object');\r",
+							"    pm.expect(response.service).to.be.an('object');\r",
+							"    pm.expect(response.status).to.be.an('object');\r",
+							"\r",
+							"    pm.expect(response.priority).to.have.property('id').that.is.a('string');\r",
+							"    pm.expect(response.priority).to.have.property('priorityName').that.is.a('string');\r",
+							"    pm.expect(response.priority).to.have.property('price').that.is.a('number');\r",
+							"    pm.expect(response.service).to.have.property('id').that.is.a('string');\r",
+							"    pm.expect(response.service).to.have.property('serviceName').that.is.a('string');\r",
+							"    pm.expect(response.service).to.have.property('price').that.is.a('number');\r",
+							"    pm.expect(response.status).to.have.property('id').that.is.a('string');\r",
+							"    pm.expect(response.status).to.have.property('statusName').that.is.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date fields are in correct format\", function () {\r",
+							"    let response = pm.response.json();\r",
+							"    let dateRegex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/;\r",
+							"\r",
+							"    pm.expect(response.createDate).to.match(dateRegex);\r",
+							"    pm.expect(response.pickupDate).to.match(dateRegex);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Email is in a valid format\", function () {\r",
+							"    let response = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(response.email).to.match(/^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$/);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response Content-Type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Priority price should be a non-negative number\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.priority.price).to.be.a('number');\r",
+							"    pm.expect(responseData.priority.price).to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Service price should be a non-negative number\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.service.price).to.be.a('number');\r",
+							"    pm.expect(responseData.service.price).to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7297/api/serviceorders/{{serviceOrderId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"api",
+						"serviceorders",
+						"{{serviceOrderId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetServiceOrdersByPriority",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each element has the expected properties\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    jsonData.forEach((element) => {\r",
+							"        pm.expect(element).to.have.property('id');\r",
+							"        pm.expect(element).to.have.property('firstname');\r",
+							"        pm.expect(element).to.have.property('lastname');\r",
+							"        pm.expect(element).to.have.property('email');\r",
+							"        pm.expect(element).to.have.property('phone');\r",
+							"        pm.expect(element).to.have.property('priorityId');\r",
+							"        pm.expect(element).to.have.property('createDate');\r",
+							"        pm.expect(element).to.have.property('pickupDate');\r",
+							"        pm.expect(element).to.have.property('serviceId');\r",
+							"        pm.expect(element).to.have.property('totalPrice_CHF');\r",
+							"        pm.expect(element).to.have.property('statusId');\r",
+							"        pm.expect(element).to.have.property('comment');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// Test, ob die createDate und pickupDate im richtigen Format sind\r",
+							"pm.test(\"Date fields are in correct format\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    let dateRegex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/;\r",
+							"    jsonData.forEach((element) => {\r",
+							"        pm.expect(element.createDate).to.match(dateRegex);\r",
+							"        pm.expect(element.pickupDate).to.match(dateRegex);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response Content-Type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Service should be null or an object with expected properties\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+							"  \r",
+							"  responseData.forEach(function(order) {\r",
+							"    pm.expect(order.service).to.satisfy(function (service) {\r",
+							"      return service === null || (typeof service === 'object' && Object.keys(service).length > 0);\r",
+							"    }, \"Service should be null or an object with expected properties\");\r",
+							"  });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Total price is a non-negative number\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('array');\r",
+							"  responseData.forEach(function(order) {\r",
+							"    pm.expect(order.totalPrice_CHF).to.be.at.least(0);\r",
+							"  });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status is a valid value or null\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    responseData.forEach(function(order) {\r",
+							"        pm.expect(order.status).to.satisfy(function (value) {\r",
+							"            return value === null || (typeof value === 'string' && value.length > 0);\r",
+							"        });\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7297/api/serviceorders/priorities/{{priorityId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"api",
+						"serviceorders",
+						"priorities",
+						"{{priorityId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();\r",
+							"pm.environment.set(\"token\", responseData.value.token);\r",
+							"pm.environment.set(\"userId\", responseData.value.id);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields - username and token\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.value).to.exist;\r",
+							"  pm.expect(responseData.value.username).to.exist;\r",
+							"  pm.expect(responseData.value.token).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Token is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.value.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Value object contains expected keys - username and token\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.value).to.include.all.keys('username', 'token');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userName\": \"admin\",\r\n  \"password\": \"Password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7297/api/users/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AssignToServiceOrder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData).to.include.all.keys(\"id\", \"firstname\", \"lastname\", \"email\", \"phone\", \"priorityId\", \"createDate\", \"pickupDate\", \"serviceId\", \"totalPrice_CHF\", \"statusId\", \"comment\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7297/{{serviceOrderId}}/assign/{{userId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"{{serviceOrderId}}",
+						"assign",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAssignedUserToServiceOrder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.to.have.status(200));\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.include.all.keys(\r",
+							"        'id', 'firstname', 'lastname', 'email', 'phone',\r",
+							"        'priorityId', 'createDate', 'pickupDate', 'serviceId',\r",
+							"        'totalPrice_CHF', 'statusId', 'comment'\r",
+							"    );\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7297/{{serviceOrderId}}/assign/{{userId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"{{serviceOrderId}}",
+						"assign",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateServiceOrder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Email is in a valid format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData.email).to.be.a('string');\r",
+							"    pm.expect(responseData.email).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Priority price is a non-negative number\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.priority.price).to.be.a('number');\r",
+							"    pm.expect(responseData.priority.price).to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Service price is a non-negative number\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.have.property('service');\r",
+							"  pm.expect(responseData.service).to.have.property('price').that.is.a('number').and.is.at.least(0);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    const requiredFields = [\"id\", \"firstname\", \"lastname\", \"email\", \"phone\", \"priorityId\", \"createDate\", \"pickupDate\", \"serviceId\", \"totalPrice_CHF\", \"statusId\", \"comment\"];\r",
+							"    requiredFields.forEach(field => {\r",
+							"        pm.expect(responseData).to.have.property(field);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"ID is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"ID should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Phone is in a valid format\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"  pm.expect(responseData.phone).to.match(/^\\d{10}$/, \"Phone should be in a valid format\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Service name is a non-empty string and price is a non-negative number\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.service.serviceName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Service name should not be empty\");\r",
+							"    pm.expect(responseData.service.price).to.be.a('number').and.to.be.at.least(0, \"Price should be a non-negative number\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Mathias\",\r\n    \"lastname\": \"Furrer\",\r\n    \"email\": \"mathias@furrer.ch\",\r\n    \"phone\": \"0760000420\",\r\n    \"priorityId\": \"{{priorityId}}\",\r\n    \"createDate\": \"2024-02-02T10:28:32.114Z\",\r\n    \"pickupDate\": \"2024-02-03T10:28:32.116Z\",\r\n    \"serviceId\": \"{{serviceId}}\",\r\n    \"statusId\": \"{{statusId}}\",\r\n    \"comment\": \"Diese ServiceOrder wurde durch Postman geändert\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7297/api/serviceorders/{{serviceOrderId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"api",
+						"serviceorders",
+						"{{serviceOrderId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SetServiceOrderStatusToCancelled",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.include.all.keys('id', 'firstname', 'lastname', 'email', 'phone', 'priorityId', 'createDate', 'pickupDate', 'serviceId', 'totalPrice_CHF', 'statusId', 'comment');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response Content-Type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7297/api/serviceorders/{{serviceOrderId}}/cancel",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"api",
+						"serviceorders",
+						"{{serviceOrderId}}",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteServiceOrder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7297/api/serviceorders/{{serviceOrderId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"api",
+						"serviceorders",
+						"{{serviceOrderId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userName\": \"{{$randomFirstName}}\",\r\n  \"password\": \"PostmanPassword\",\r\n  \"role\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7297/api/users/create",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"api",
+						"users",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UnlockUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userName\": \"PostmanTestUser\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7297/api/users/unlock",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7297",
+					"path": [
+						"api",
+						"users",
+						"unlock"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

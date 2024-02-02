@@ -1,0 +1,640 @@
+{
+	"id": "55fc2f92-25d3-452f-8863-70c2cf52df39",
+	"name": "SkiService_NoSQL",
+	"timestamp": "2024-02-02T15:17:12.203Z",
+	"collection_id": "29157825-982a4d70-f440-42d2-a053-424c04a8a4fd",
+	"folder_id": 0,
+	"environment_id": "29157825-b53d95f2-0178-496b-a36f-b0602d8e6f78",
+	"totalPass": 53,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2024-02-02T15:17:07.708Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "d5b2a678-903b-4449-8fc9-e041580b0b7a",
+			"name": "GetAllServiceOrders",
+			"url": "https://localhost:7297/api/serviceorders",
+			"time": 1336,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Each element has the expected properties and types": true,
+				"Check values for priorityName and statusName": true,
+				"Email is in a valid format": true,
+				"Date is in a valid date format": true,
+				"Phone is in a valid format": true,
+				"Verify priorityName and statusName are present and have valid values": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Each element has the expected properties and types": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check values for priorityName and statusName": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Email is in a valid format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Date is in a valid date format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Phone is in a valid format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify priorityName and statusName are present and have valid values": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				1336
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Each element has the expected properties and types": true,
+					"Check values for priorityName and statusName": true,
+					"Email is in a valid format": true,
+					"Date is in a valid date format": true,
+					"Phone is in a valid format": true,
+					"Verify priorityName and statusName are present and have valid values": true
+				}
+			]
+		},
+		{
+			"id": "20a65686-60fe-4334-9111-734046243199",
+			"name": "CreateNewServiceOrder",
+			"url": "https://localhost:7297/api/serviceorders",
+			"time": 209,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Response status code is 201": true,
+				"Email is in a valid format": true,
+				"Priority and service fields should be null": true,
+				"Total price is a non-negative number": true,
+				"Response Content-Type header is application/json": true,
+				"Id is a non-empty string": true,
+				"Create date is in a valid date format": true,
+				"Pickup date is either null or in a valid date format": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Email is in a valid format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Priority and service fields should be null": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Total price is a non-negative number": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response Content-Type header is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Id is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Create date is in a valid date format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Pickup date is either null or in a valid date format": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				209
+			],
+			"allTests": [
+				{
+					"Response status code is 201": true,
+					"Email is in a valid format": true,
+					"Priority and service fields should be null": true,
+					"Total price is a non-negative number": true,
+					"Response Content-Type header is application/json": true,
+					"Id is a non-empty string": true,
+					"Create date is in a valid date format": true,
+					"Pickup date is either null or in a valid date format": true
+				}
+			]
+		},
+		{
+			"id": "4e42a265-b418-443b-b072-1cb22d021790",
+			"name": "GetServiceOrderById",
+			"url": "https://localhost:7297/api/serviceorders/65bd0775d6661d80fcd08572",
+			"time": 323,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response has the expected structure": true,
+				"Date fields are in correct format": true,
+				"Email is in a valid format": true,
+				"Response Content-Type is application/json": true,
+				"Priority price should be a non-negative number": true,
+				"Service price should be a non-negative number": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the expected structure": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Date fields are in correct format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Email is in a valid format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response Content-Type is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Priority price should be a non-negative number": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Service price should be a non-negative number": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				323
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response has the expected structure": true,
+					"Date fields are in correct format": true,
+					"Email is in a valid format": true,
+					"Response Content-Type is application/json": true,
+					"Priority price should be a non-negative number": true,
+					"Service price should be a non-negative number": true
+				}
+			]
+		},
+		{
+			"id": "f432c955-f1ce-4535-b225-2e8c437d4609",
+			"name": "GetServiceOrdersByPriority",
+			"url": "https://localhost:7297/api/serviceorders/priorities/65bd02fad6661d80fcd08561",
+			"time": 34,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response is an array": true,
+				"Each element has the expected properties": true,
+				"Date fields are in correct format": true,
+				"Response Content-Type is application/json": true,
+				"Service should be null or an object with expected properties": true,
+				"Total price is a non-negative number": true,
+				"Status is a valid value or null": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response is an array": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Each element has the expected properties": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Date fields are in correct format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response Content-Type is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Service should be null or an object with expected properties": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Total price is a non-negative number": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status is a valid value or null": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				34
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response is an array": true,
+					"Each element has the expected properties": true,
+					"Date fields are in correct format": true,
+					"Response Content-Type is application/json": true,
+					"Service should be null or an object with expected properties": true,
+					"Total price is a non-negative number": true,
+					"Status is a valid value or null": true
+				}
+			]
+		},
+		{
+			"id": "4891f70f-27fc-4dc3-a4e6-3236e5a1bd9e",
+			"name": "Login",
+			"url": "https://localhost:7297/api/users/login",
+			"time": 34,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Content-Type header is application/json": true,
+				"Response has the required fields - username and token": true,
+				"Token is a non-empty string": true,
+				"Value object contains expected keys - username and token": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type header is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields - username and token": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Token is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Value object contains expected keys - username and token": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				34
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Content-Type header is application/json": true,
+					"Response has the required fields - username and token": true,
+					"Token is a non-empty string": true,
+					"Value object contains expected keys - username and token": true
+				}
+			]
+		},
+		{
+			"id": "b270f275-3faf-4841-9beb-2ae06bd91aba",
+			"name": "AssignToServiceOrder",
+			"url": "https://localhost:7297/65bd0775d6661d80fcd08572/assign/65bd02fad6661d80fcd0854c",
+			"time": 278,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required fields": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				278
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true
+				}
+			]
+		},
+		{
+			"id": "ff784dc3-e3f3-48f5-8361-e08c2f756019",
+			"name": "UpdateAssignedUserToServiceOrder",
+			"url": "https://localhost:7297/65bd0775d6661d80fcd08572/assign/65bd02fad6661d80fcd0854c",
+			"time": 270,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required fields": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				270
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true
+				}
+			]
+		},
+		{
+			"id": "6c76e84f-d8fb-4c85-9a7b-3070bd129c34",
+			"name": "UpdateServiceOrder",
+			"url": "https://localhost:7297/api/serviceorders/65bd0775d6661d80fcd08572",
+			"time": 291,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Email is in a valid format": true,
+				"Priority price is a non-negative number": true,
+				"Service price is a non-negative number": true,
+				"Response has the required fields": true,
+				"ID is a non-empty string": true,
+				"Phone is in a valid format": true,
+				"Service name is a non-empty string and price is a non-negative number": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Email is in a valid format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Priority price is a non-negative number": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Service price is a non-negative number": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"ID is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Phone is in a valid format": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Service name is a non-empty string and price is a non-negative number": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				291
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Email is in a valid format": true,
+					"Priority price is a non-negative number": true,
+					"Service price is a non-negative number": true,
+					"Response has the required fields": true,
+					"ID is a non-empty string": true,
+					"Phone is in a valid format": true,
+					"Service name is a non-empty string and price is a non-negative number": true
+				}
+			]
+		},
+		{
+			"id": "28fffbe5-930a-4c19-a642-07c41053e89c",
+			"name": "SetServiceOrderStatusToCancelled",
+			"url": "https://localhost:7297/api/serviceorders/65bd0775d6661d80fcd08572/cancel",
+			"time": 288,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required fields": true,
+				"Response Content-Type is application/json": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response Content-Type is application/json": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				288
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true,
+					"Response Content-Type is application/json": true
+				}
+			]
+		},
+		{
+			"id": "78a59faa-effa-4a17-90fd-49a58ae0bf40",
+			"name": "DeleteServiceOrder",
+			"url": "https://localhost:7297/api/serviceorders/65bd0775d6661d80fcd08572",
+			"time": 354,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				354
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "41b238c5-8ec2-41dc-b463-f7420c6dcd65",
+			"name": "CreateNewUser",
+			"url": "https://localhost:7297/api/users/create",
+			"time": 31,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				31
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "849ebfa2-ed64-446b-a02f-2a4c2aaaff22",
+			"name": "UnlockUser",
+			"url": "https://localhost:7297/api/users/unlock",
+			"time": 50,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				50
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 3498,
+	"collection": {
+		"requests": [
+			{
+				"id": "d5b2a678-903b-4449-8fc9-e041580b0b7a",
+				"method": "GET"
+			},
+			{
+				"id": "20a65686-60fe-4334-9111-734046243199",
+				"method": "POST"
+			},
+			{
+				"id": "4e42a265-b418-443b-b072-1cb22d021790",
+				"method": "GET"
+			},
+			{
+				"id": "f432c955-f1ce-4535-b225-2e8c437d4609",
+				"method": "GET"
+			},
+			{
+				"id": "4891f70f-27fc-4dc3-a4e6-3236e5a1bd9e",
+				"method": "POST"
+			},
+			{
+				"id": "b270f275-3faf-4841-9beb-2ae06bd91aba",
+				"method": "POST"
+			},
+			{
+				"id": "ff784dc3-e3f3-48f5-8361-e08c2f756019",
+				"method": "PUT"
+			},
+			{
+				"id": "6c76e84f-d8fb-4c85-9a7b-3070bd129c34",
+				"method": "PUT"
+			},
+			{
+				"id": "28fffbe5-930a-4c19-a642-07c41053e89c",
+				"method": "PUT"
+			},
+			{
+				"id": "78a59faa-effa-4a17-90fd-49a58ae0bf40",
+				"method": "DELETE"
+			},
+			{
+				"id": "41b238c5-8ec2-41dc-b463-f7420c6dcd65",
+				"method": "POST"
+			},
+			{
+				"id": "849ebfa2-ed64-446b-a02f-2a4c2aaaff22",
+				"method": "POST"
+			}
+		]
+	}
+}
