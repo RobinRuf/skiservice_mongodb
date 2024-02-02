@@ -5481,3 +5481,17 @@ RolesAuthorizationRequirement:User.IsInRole must be true for one of the followin
 [2024-02-02 16:37:28.945 +01:00  INF]  Executed action skiservice.Controllers.UsersController.UnlockUser (skiservice) in 30.013ms
 [2024-02-02 16:37:28.945 +01:00  INF]  Executed endpoint 'skiservice.Controllers.UsersController.UnlockUser (skiservice)'
 [2024-02-02 16:37:28.946 +01:00  INF]  Request finished HTTP/1.1 POST https://localhost:7297/api/users/unlock application/json 37 - 200 - text/plain;+charset=utf-8 31.5215ms
+[2024-02-02 20:41:09.389 +01:00  INF]  User profile is available. Using 'C:\Users\robin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2024-02-02 20:41:09.623 +01:00  INF]  Now listening on: https://localhost:7297
+[2024-02-02 20:41:09.623 +01:00  INF]  Now listening on: http://localhost:5039
+[2024-02-02 20:41:09.624 +01:00  INF]  Application started. Press Ctrl+C to shut down.
+[2024-02-02 20:41:09.624 +01:00  INF]  Hosting environment: Development
+[2024-02-02 20:41:09.624 +01:00  INF]  Content root path: C:\GitHub\Modul165\SkiServiceApi_MongoDB\SkiServiceApi
+[2024-02-02 20:41:14.006 +01:00  INF]  Request starting HTTP/2 GET https://localhost:7297/swagger/index.html - -
+[2024-02-02 20:41:14.317 +01:00  INF]  Request finished HTTP/2 GET https://localhost:7297/swagger/index.html - - - 200 - text/html;charset=utf-8 317.5856ms
+[2024-02-02 20:41:14.328 +01:00  INF]  Request starting HTTP/2 GET https://localhost:7297/_vs/browserLink - -
+[2024-02-02 20:41:14.328 +01:00  INF]  Request starting HTTP/2 GET https://localhost:7297/_framework/aspnetcore-browser-refresh.js - -
+[2024-02-02 20:41:14.334 +01:00  INF]  Request finished HTTP/2 GET https://localhost:7297/_framework/aspnetcore-browser-refresh.js - - - 200 13756 application/javascript;+charset=utf-8 5.7252ms
+[2024-02-02 20:41:14.746 +01:00  INF]  Request finished HTTP/2 GET https://localhost:7297/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 417.8871ms
+[2024-02-02 20:41:14.834 +01:00  INF]  Request starting HTTP/2 GET https://localhost:7297/swagger/v1/swagger.json - -
+[2024-02-02 20:41:14.973 +01:00  INF]  Request finished HTTP/2 GET https://localhost:7297/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 138.7480ms
