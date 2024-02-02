@@ -1,0 +1,9 @@
+# NuGet-Paketordner
+packages/
+
+# Benutzerspezifische Ordner
+.vs/
+
+# Ignoriere den bin und obj Ordner
+bin/
+obj/
