@@ -39,6 +39,7 @@ namespace skiservice.Controllers
                 var token = _tokenService.CreateToken(model.UserName, user.Role.ToString());
                 return Ok(new JsonResult(new
                 {
+                    user.Id,
                     Username = model.UserName,
                     Token = token
                 }));

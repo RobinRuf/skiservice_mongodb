@@ -64,16 +64,6 @@ namespace skiservice.Data
                     Role = Roles.ADMIN
                 });
 
-                CreatePasswordHash("Password1", out byte[] admin1PasswordHash, out byte[] admin1PasswordSalt);
-                users.Add(new UserModel
-                {
-                    UserName = "admin1",
-                    PasswordHash = admin1PasswordHash,
-                    PasswordSalt = admin1PasswordSalt,
-                    IsLocked = false,
-                    Role = Roles.ADMIN
-                });
-
                 for (int i = 1; i <= 10; i++)
                 {
                     CreatePasswordHash($"Password{i}", out byte[] userPasswordHash, out byte[] userPasswordSalt);
@@ -86,6 +76,8 @@ namespace skiservice.Data
                         Role = Roles.USER
                     });
                 }
+
+                
 
                 userCollection.InsertMany(users);
 

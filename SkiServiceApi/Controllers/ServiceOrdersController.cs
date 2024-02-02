@@ -69,7 +69,6 @@ namespace skiservice.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateServiceOrderDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Roles = "ADMIN,USER")]
         public async Task<IActionResult> CreateServiceOrder([FromBody] CreateServiceOrderDto createServiceOrderDto)
         {
             if (!ModelState.IsValid)
@@ -127,7 +126,7 @@ namespace skiservice.Controllers
             }
 
             await _serviceOrderService.CancelServiceOrderAsync(id);
-            return Ok();
+            return Ok(serviceOrderDto);
         }
 
         /// <summary>
@@ -148,7 +147,7 @@ namespace skiservice.Controllers
             }
 
             await _serviceOrderService.DeleteServiceOrderPermanentlyAsync(id);
-            return Ok();
+            return Ok($"ServiceOrder mit der ID {serviceOrderDto.Id} wurde erfolgreich gelöscht.");
         }
 
 

@@ -1,16 +1,19 @@
 ﻿using skiservice.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using skiservice.Services;
 
 namespace skiservice.Controllers
 {
     public class AssignController : Controller
     {
         private readonly IAssignService _assignService;
+        private readonly IServiceOrderService _serviceOrderService;
 
-        public AssignController(IAssignService assignService)
+        public AssignController(IAssignService assignService, IServiceOrderService serviceOrderService)
         {
             _assignService = assignService;
+            _serviceOrderService = serviceOrderService;
         }
 
         [HttpPost("{Id}/assign/{userId}")]
@@ -21,9 +24,9 @@ namespace skiservice.Controllers
         {
             try
             {
-                string currentUserName = User.Identity?.Name;
-                await _assignService.AssignServiceOrderToUser(Id, userId, currentUserName);
-                return Ok($"Auftrag {Id} wurde erfolgreich dem User {userId} zugewiesen.");
+                await _assignService.AssignServiceOrderToUser(Id, userId);
+                var serviceOrderDto = await _serviceOrderService.GetServiceOrderByIdAsync(Id);
+                return Ok(serviceOrderDto);
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -46,7 +49,8 @@ namespace skiservice.Controllers
             try
             {
                 await _assignService.AssignServiceOrderToUser(Id, userId);
-                return Ok($"ServiceOrder {Id} wurde erfolgreich User {userId} zugewiesen.");
+                var serviceOrderDto = await _serviceOrderService.GetServiceOrderByIdAsync(Id);
+                return Ok(serviceOrderDto);
             }
             catch (KeyNotFoundException ex)
             {
